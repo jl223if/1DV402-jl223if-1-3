@@ -14,30 +14,29 @@ namespace lonerevision
             int numberOfSalaries;
 
 
-            //inläsning av löner     
+            //inläsning av löner  
              
                 //Console.BackgroundColor = ConsoleColor.Green;
                 //Console.WriteLine("Tryck på en tangent för att fortsätta!");
-                //Console.ResetColor();
-                //if (Console.ReadKey(true).Key != ConsoleKey.Escape)
-                //{
-                    
-                //}
-
+                //Console.ResetColor();    
+            do
+            {                          
                 do
                 {
+                    Console.WriteLine(); 
                     numberOfSalaries = ReadInt("Ange antal löner att mata in: ");
-                    if (numberOfSalaries < 2)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Du måste mata in minst 2 värden för att kunna göra en beräkning!");
-                        Console.ResetColor();
-                    }                  
-                } while (numberOfSalaries < 2 );         
-
-
+                    Console.WriteLine();       
+                } while (numberOfSalaries < 2 );
+             
             //Bearbaetar lönerna
            processSalaries(numberOfSalaries);
+
+           //Kollar ifall man vill skriva in mer löner
+           Console.BackgroundColor = ConsoleColor.DarkGreen;
+           Console.WriteLine(); 
+           Console.WriteLine("Tryck tangent för ny beräkning - Esc avslutar.");
+           Console.ResetColor();
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
 
         private static void processSalaries(int count)
@@ -46,6 +45,7 @@ namespace lonerevision
             for (int i = 0; i < count; i++)
             {
                 Salaries[i] = ReadInt("Ange lön nummer " + (i + 1) + ":");
+                Console.WriteLine(); 
             }
             Array.Sort(Salaries);
 
@@ -97,14 +97,18 @@ namespace lonerevision
 
         private static int ReadInt(string prompt)
         {
-            Console.Write(prompt);
+           
             int read = 0;
             bool valid = false;
             while (!valid)
             {
+                Console.Write(prompt);
+                //fångar argument
                 try
-                {  
+                {
+                   
                     read = int.Parse(Console.ReadLine());
+                 
                     valid = true;
                     if (read < 2)
                     {
@@ -112,15 +116,17 @@ namespace lonerevision
                         Console.WriteLine();
                         Console.BackgroundColor = ConsoleColor.Red;
                         Console.WriteLine("Du måste mata in minst två värden för att göra en beräkning! \n");
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
-                        Console.WriteLine("Tryck tangent för ny beräkning - Esc avslutar.");
                         Console.ResetColor();
                     }
                 }
                 catch
                 {
+                    Console.BackgroundColor = ConsoleColor.Red;
                     Console.WriteLine("Inget bra värde");
-                } 
+                    Console.ResetColor();
+                }
+
+
             } 
             return read;
         }
